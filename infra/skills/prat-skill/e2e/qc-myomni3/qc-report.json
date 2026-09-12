@@ -1,0 +1,38 @@
+{
+  "route": "/my-omni",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_my_omni_1120.png",
+      "clicks": [],
+      "width1280": "qc_my_omni_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [],
+    "badApi": [],
+    "speed": {
+      "firstApiMs": 1619,
+      "contentMs": 1573
+    },
+    "axe": {
+      "total": 5,
+      "contrast": 4,
+      "namelessControls": 0,
+      "rules": [
+        "color-contrast×4",
+        "heading-order×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "medium",
+      "check": "access",
+      "msg": "4 low-contrast / hard-to-read element(s)"
+    }
+  ]
+}

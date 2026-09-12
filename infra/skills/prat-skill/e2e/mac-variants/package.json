@@ -1,0 +1,17 @@
+{
+  "name": "omni-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "prat-skill browser E2E harness — drives real file uploads Playwright can do but the Chrome-MCP sandbox cannot.",
+  "scripts": {
+    "capability": "node capability-check.mjs",
+    "upload": "node omni-upload.mjs",
+    "install:browser": "playwright install chromium"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "axe-core": "^4.12.1",
+    "playwright": "^1.60.0"
+  }
+}

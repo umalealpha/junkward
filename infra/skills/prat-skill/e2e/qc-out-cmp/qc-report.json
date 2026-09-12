@@ -1,0 +1,53 @@
+{
+  "route": "/bonu/members",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_bonu_members_1120.png",
+      "clicks": [],
+      "width1280": "qc_bonu_members_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "badApi": [
+      "401 /adoption/screen-view/"
+    ],
+    "speed": {
+      "firstApiMs": 625,
+      "contentMs": 824
+    },
+    "axe": {
+      "total": 3,
+      "contrast": 1,
+      "namelessControls": 2,
+      "rules": [
+        "color-contrast×1",
+        "label×1",
+        "select-name×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "check": "data",
+      "msg": "1 data request(s) failed — 401 /adoption/screen-view/"
+    },
+    {
+      "severity": "high",
+      "check": "access",
+      "msg": "2 control(s) with no name — invisible/unusable button or field"
+    },
+    {
+      "severity": "medium",
+      "check": "access",
+      "msg": "1 low-contrast / hard-to-read element(s)"
+    }
+  ]
+}

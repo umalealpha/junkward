@@ -1,0 +1,42 @@
+{
+  "route": "/aware",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_aware_1120.png",
+      "clicks": [],
+      "width1280": "qc_aware_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [],
+    "badApi": [],
+    "speed": {
+      "firstApiMs": 3528,
+      "contentMs": null
+    },
+    "axe": {
+      "total": 1,
+      "contrast": 1,
+      "namelessControls": 0,
+      "rules": [
+        "color-contrast×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "check": "render",
+      "msg": "page never showed real content (stuck on a spinner within 40s)"
+    },
+    {
+      "severity": "medium",
+      "check": "access",
+      "msg": "1 low-contrast / hard-to-read element(s)"
+    }
+  ]
+}

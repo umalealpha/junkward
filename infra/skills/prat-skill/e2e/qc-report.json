@@ -1,0 +1,43 @@
+{
+  "route": "/my-omni",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_my_omni_1120.png",
+      "clicks": [],
+      "width1280": "qc_my_omni_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()",
+      "Failed to load resource: the server responded with a status of 403 ()"
+    ],
+    "badApi": [
+      "401 /adoption/screen-view/",
+      "403 https://omni.alphadirect.co.bw/hris/api/late-notice/"
+    ],
+    "speed": {
+      "firstApiMs": 557,
+      "contentMs": 1766
+    },
+    "axe": {
+      "total": 1,
+      "contrast": 0,
+      "namelessControls": 0,
+      "rules": [
+        "heading-order×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "check": "data",
+      "msg": "2 data request(s) failed — 401 /adoption/screen-view/, 403 https://omni.alphadirect.co.bw/hris/api/late-notice/"
+    }
+  ]
+}

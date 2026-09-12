@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const url = process.argv[2];
+const out = process.argv[3];
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 720, height: 900 }, deviceScaleFactor: 2 });
+await p.goto(url);
+await p.waitForTimeout(400);
+await p.screenshot({ path: out, fullPage: true });
+await b.close();
+console.log('shot ->', out);

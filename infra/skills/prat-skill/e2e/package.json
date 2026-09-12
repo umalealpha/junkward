@@ -1,0 +1,12 @@
+{
+  "name": "omni-eyes-on",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Screenshot / QA toolkit for omni.alphadirect.co.bw - shoots any screen as admin and as the non-admin staff test account.",
+  "dependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "axe-core": "^4.12.1",
+    "playwright": "^1.49.0"
+  }
+}

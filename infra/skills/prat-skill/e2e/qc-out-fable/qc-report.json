@@ -1,0 +1,29 @@
+{
+  "route": "/dashboard",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_dashboard_1120.png",
+      "clicks": [],
+      "width1280": "qc_dashboard_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [],
+    "badApi": [],
+    "speed": {
+      "firstApiMs": 571,
+      "contentMs": 779
+    },
+    "axe": {
+      "total": 0,
+      "contrast": 0,
+      "namelessControls": 0,
+      "rules": []
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": []
+}

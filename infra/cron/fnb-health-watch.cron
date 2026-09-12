@@ -1,0 +1,8 @@
+# FNB health watch — hourly (CFO 2026-08-04).
+#   1. Bank link up<->down: email CFO + Kago + Pako on a state change.
+#   2. Stuck EFT batches (added 2026-08-20): email when a batch has sat in
+#      submitted/acknowledged/unknown for more than 2 hours, because FNB
+#      answering `425 Too Early` forever looks identical to a healthy batch.
+# This file was live on the host from 2026-08-04 but was NOT in the repo, so an
+# instance rebuild would have silently dropped both alerts. Now managed here.
+0 * * * * root cd /opt/alpha-finance && /usr/bin/docker compose --env-file /etc/alpha-finance/.env exec -T backend python manage.py fnb_health_watch >> /var/log/fnb-health-watch.log 2>&1

@@ -1,0 +1,46 @@
+{
+  "route": "/bonu/legal-bills",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_bonu_legal_bills_1120.png",
+      "clicks": [],
+      "width1280": "qc_bonu_legal_bills_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "badApi": [
+      "401 /adoption/screen-view/"
+    ],
+    "speed": {
+      "firstApiMs": 722,
+      "contentMs": 866
+    },
+    "axe": {
+      "total": 1,
+      "contrast": 1,
+      "namelessControls": 0,
+      "rules": [
+        "color-contrast×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "check": "data",
+      "msg": "1 data request(s) failed — 401 /adoption/screen-view/"
+    },
+    {
+      "severity": "medium",
+      "check": "access",
+      "msg": "1 low-contrast / hard-to-read element(s)"
+    }
+  ]
+}

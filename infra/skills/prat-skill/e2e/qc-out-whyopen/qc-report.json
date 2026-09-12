@@ -1,0 +1,55 @@
+{
+  "route": "/payment-requests?all=1",
+  "base": "https://omni.alphadirect.co.bw",
+  "checks": {
+    "render": {
+      "width1120": "qc_payment_requests_all_1_1120.png",
+      "clicks": [],
+      "width1280": "qc_payment_requests_all_1_1280.png"
+    },
+    "jsErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "badApi": [
+      "401 /adoption/screen-view/"
+    ],
+    "speed": {
+      "firstApiMs": 3578,
+      "contentMs": 14474
+    },
+    "axe": {
+      "total": 10,
+      "contrast": 6,
+      "namelessControls": 0,
+      "rules": [
+        "color-contrast×6",
+        "empty-table-header×1",
+        "landmark-main-is-top-level×1",
+        "landmark-no-duplicate-main×1",
+        "landmark-unique×1"
+      ]
+    },
+    "readOnly": {
+      "writeStatus": 401,
+      "safe": true
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "check": "data",
+      "msg": "1 data request(s) failed — 401 /adoption/screen-view/"
+    },
+    {
+      "severity": "high",
+      "check": "speed",
+      "msg": "slow: content took 14.5s to appear"
+    },
+    {
+      "severity": "medium",
+      "check": "access",
+      "msg": "6 low-contrast / hard-to-read element(s)"
+    }
+  ]
+}
