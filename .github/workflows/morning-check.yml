@@ -14,8 +14,9 @@ name: Morning Health Check
 #   - Opens an Issue tagged morning-check if anything red.
 
 on:
-  schedule:
-    - cron: '0 3 * * *'
+  # schedule disabled in this test repository (no AWS secrets, not the prod host)
+  # schedule:
+  #   - cron: '0 3 * * *'
   workflow_dispatch: {}
 
 permissions:
