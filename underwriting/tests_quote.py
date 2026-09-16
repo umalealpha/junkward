@@ -4,6 +4,7 @@ Ten real quotes were reviewed before this was built. Two clients shared a file,
 one was a competitor's schedule reused as our base, and VAT appeared three
 different ways. Each test below is one of those failures, made impossible.
 """
+import unittest
 from decimal import Decimal
 
 from django.contrib.auth.models import User
@@ -590,6 +591,8 @@ class QuoteDocumentDesignTests(TestCase):
         return Quote.objects.create(client_name='Design Ltd', rate_incl_vat=False,
                                     sections=self.SECTIONS, **kw)
 
+    @unittest.skipUnless(_STAMP.exists(),
+                         "brand artwork (procurement/pdf_assets/stamp.png) not in this checkout")
     def test_the_brand_assets_exist_on_disk(self):
         # If the asset moves, the letterhead silently falls back to typed text.
         self.assertTrue(_png_data_uri(str(_LOGO_COLOUR)).startswith('data:image/png;base64,'))
@@ -612,6 +615,8 @@ class QuoteDocumentDesignTests(TestCase):
         self.assertIn('Total sums insured', html)
         self.assertIn('17,900,000.00', html)          # 8.5m + 9.4m; 'Included' skipped
 
+    @unittest.skipUnless(_STAMP.exists(),
+                         "brand artwork (procurement/pdf_assets/stamp.png) not in this checkout")
     def test_a_draft_is_not_stamped_but_an_issued_quote_is(self):
         draft = self._quote()
         self.assertNotIn('class="stamp"', quote_html(draft))

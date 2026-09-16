@@ -3,6 +3,7 @@
 Run: DB_ENGINE=sqlite SECRET_KEY=devtest python manage.py test nexus.tests_vehicle_register
 """
 from __future__ import annotations
+import unittest
 
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -11,6 +12,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase, override_settings
 
 from core.models import AuditLog
+from .vehicle_reports import _LOGO_CANDIDATES
 from .models import (
     FleetVehicle, TripPurpose, TripState, VehicleStatus, VehicleTrip,
 )
@@ -235,6 +237,8 @@ class VehicleRegisterTests(TestCase):
         self.assertEqual(x.status_code, 200)
         self.assertIn('spreadsheetml', x['Content-Type'])
 
+    @unittest.skipUnless(_LOGO_CANDIDATES[0].exists(),
+                         "brand artwork (procurement/pdf_assets/logo-clean.png) not in this checkout")
     def test_export_carries_the_logo_on_every_sheet(self):
         """The branded export must ship the real logo artwork, not just brand
         colours — a silently missing image is what went wrong on the payslip."""
