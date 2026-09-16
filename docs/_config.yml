@@ -1,0 +1,62 @@
+# Jekyll configuration for the Omni documentation site.
+#
+# Source is this docs/ folder only. The Django and Next.js code at the repo
+# root is never touched by Jekyll. Built and deployed by
+# .github/workflows/pages.yml using the GitHub Pages Jekyll action, so the
+# plugin list below is limited to what the github-pages gem allows.
+#
+# baseurl is NOT set here on purpose: the github-pages gem derives it from the
+# repository name at build time, so renaming the repo needs no edit.
+
+title: Omni
+description: >-
+  Alpha Direct Insurance Company (Pty) Ltd — internal ERP documentation.
+  Django backend, Next.js frontend, PostgreSQL.
+lang: en
+
+theme: minima
+minima:
+  skin: classic
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-optional-front-matter   # render every .md, not only those with front matter
+  - jekyll-default-layout          # give pages the "page" layout automatically
+  - jekyll-titles-from-headings    # take the page title from the first "# heading"
+  - jekyll-relative-links          # make links between .md files resolve on the site
+  - jekyll-readme-index
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+optional_front_matter:
+  remove_originals: true
+titles_from_headings:
+  strip_title: true
+relative_links:
+  enabled: true
+  collections: false
+
+# Top navigation (minima reads header_pages).
+header_pages:
+  - fnb-integration.md
+  - graphite-omni-payment-integration.md
+  - salvage-portal.md
+  - ADI-vs-ADIC-disambiguation.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+exclude:
+  - plans/          # internal planning notes, not documentation
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - node_modules/
+  - README.md

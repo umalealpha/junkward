@@ -72,3 +72,11 @@ Seed Production.docx
 
 # tb_check JSON receipts (one per run — local artefact, not source-of-truth)
 reports/tb-check-*.json
+
+# Jekyll docs site (docs/) — build output and local gem state
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/.sass-cache/
+docs/Gemfile.lock
+docs/vendor/
