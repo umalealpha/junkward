@@ -27,6 +27,10 @@ concurrency:
 
 jobs:
   deploy:
+    # Test-repository guard: this job talks to the production AWS account, so it
+    # only runs when the repository variable ENABLE_AWS_DEPLOY is set to "true"
+    # (Settings > Secrets and variables > Actions > Variables). Unset here.
+    if: vars.ENABLE_AWS_DEPLOY == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: aws-actions/configure-aws-credentials@v4
