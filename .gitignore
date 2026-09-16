@@ -80,3 +80,11 @@ docs/.jekyll-metadata
 docs/.sass-cache/
 docs/Gemfile.lock
 docs/vendor/
+
+# AWS credentials — never commit. The app needs none; the host scripts read the
+# instance role or the operator profile at runtime (see OMNI_AWS_DISABLED in .env.example).
+.aws/
+aws-credentials*
+*.aws.json
+*.pem
+*.ppk

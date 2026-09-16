@@ -46,6 +46,14 @@ done
 say() { echo "[$(date -u +%H:%M:%S)] $*"; }
 DC=(docker compose --env-file "$ENV_FILE" -f docker-compose.yml -f docker-compose.bluegreen.yml)
 
+# Test-environment switch. OMNI_AWS_DISABLED=1 (in the environment or in $ENV_FILE)
+# makes every AWS call in this script a no-op with a message: the S3 upload of the
+# pre-deploy dump and the S3-verified retention. The dump is still taken and kept
+# locally. Production leaves it unset, so production behaviour is unchanged.
+OMNI_AWS_DISABLED=${OMNI_AWS_DISABLED:-$(grep -sE '^OMNI_AWS_DISABLED=' "$ENV_FILE" | head -1 | cut -d= -f2-)}
+OMNI_AWS_DISABLED=${OMNI_AWS_DISABLED:-0}
+aws_disabled() { [ "$OMNI_AWS_DISABLED" = 1 ] || [ "$OMNI_AWS_DISABLED" = true ]; }
+
 # Single-runner lock (2026-09-07). The SSM wrapper can retry after a client-side
 # timeout and launch a SECOND deploy; two blue/green runs then interleave on the
 # same 8000/8001 slots and the one Caddy include — one stops green while the other
@@ -100,6 +108,10 @@ free_gb() { df -P --block-size=1G / 2>/dev/null | awk 'NR==2{print $4}'; }
 # directory (the TEST dump and the vendor-merge records stay).
 prune_verified_backups() {
   local days="$1" n=0 bytes=0 kept=0 f base local_size remote_size
+  if aws_disabled; then
+    say "backup retention: skipped — AWS disabled (OMNI_AWS_DISABLED=1), nothing can be verified in S3 so nothing is deleted"
+    return 0
+  fi
   for f in $(find "$BK_DIR" -maxdepth 1 -name 'alpha_finance_predeploy_2*.sql.gz' -mtime +"$days" 2>/dev/null); do
     base=$(basename "$f"); local_size=$(stat -c %s "$f" 2>/dev/null || echo 0)
     remote_size=$(AWS_DEFAULT_REGION=af-south-1 aws s3api head-object \
@@ -162,8 +174,11 @@ if [ "$BK_SIZE" -lt "$BK_MIN" ]; then
 fi
 
 # Off the box as well — a backup that only exists on the machine we are about to
-# change is not a backup.
-if AWS_DEFAULT_REGION=af-south-1 aws s3 cp "$BK_LOCAL" \
+# change is not a backup. (Skipped, with the local copy kept, when AWS is disabled
+# for a test environment — see OMNI_AWS_DISABLED above.)
+if aws_disabled; then
+  say "backup OK locally: ${BK_SIZE} bytes, gzip verified, at $BK_LOCAL — NOT uploaded to S3 (OMNI_AWS_DISABLED=1)"
+elif AWS_DEFAULT_REGION=af-south-1 aws s3 cp "$BK_LOCAL" \
      "s3://alphadirect-db-backups-capetown/alpha-finance/pre-deploy/${BK_NAME}" \
      --metadata "instance=i-02a5d76a61f4f09a5,size_bytes=${BK_SIZE}" --storage-class STANDARD >/dev/null 2>&1; then
   S3_SIZE=$(AWS_DEFAULT_REGION=af-south-1 aws s3api head-object \

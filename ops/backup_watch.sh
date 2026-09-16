@@ -58,6 +58,14 @@ if [ "${1:-}" = '--self-test' ]; then
   exit "$fail"
 fi
 
+# Test-environment switch: OMNI_AWS_DISABLED=1 (env or $ENV_FILE) means there is no
+# S3 heartbeat to watch, so exit quietly rather than alerting the CFO every morning.
+OMNI_AWS_DISABLED=${OMNI_AWS_DISABLED:-$(grep -sE '^OMNI_AWS_DISABLED=' "$ENV_FILE" | head -1 | cut -d= -f2-)}
+if [ "${OMNI_AWS_DISABLED:-0}" = 1 ] || [ "${OMNI_AWS_DISABLED:-0}" = true ]; then
+  echo "backup watch: skipped — AWS disabled (OMNI_AWS_DISABLED=1) in this environment"
+  exit 0
+fi
+
 KEY="s3://${S3_BUCKET}/${S3_PREFIX}/last-success.txt"
 NOW=$(date -u +%s)
 DETAIL=''

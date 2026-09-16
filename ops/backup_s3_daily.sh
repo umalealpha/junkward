@@ -56,6 +56,14 @@ GPG_RECIPIENT="${GPG_RECIPIENT:-Alpha Direct ERP Backup}"
 INSTANCE_ID="${INSTANCE_ID:-i-02a5d76a61f4f09a5}"
 AWS_REGION_="${AWS_REGION_:-af-south-1}"
 
+# Test-environment switch: OMNI_AWS_DISABLED=1 (env or /etc/alpha-finance/.env) means
+# there is no S3 to copy to, so this job exits cleanly instead of failing every night.
+OMNI_AWS_DISABLED=${OMNI_AWS_DISABLED:-$(sudo grep -sE '^OMNI_AWS_DISABLED=' /etc/alpha-finance/.env | head -1 | cut -d= -f2-)}
+if [ "${OMNI_AWS_DISABLED:-0}" = 1 ] || [ "${OMNI_AWS_DISABLED:-0}" = true ]; then
+  echo "SKIP: AWS disabled (OMNI_AWS_DISABLED=1) — no off-site S3 backup in this environment"
+  exit 0
+fi
+
 TS=$(date -u +%Y-%m-%dT%H-%M-%SZ)
 BASE="alpha_finance_${TS}.sql.gz"
 LOCAL="/tmp/${BASE}"

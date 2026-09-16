@@ -4,6 +4,13 @@
 # Reads DB creds from /etc/alpha-finance/.env at runtime (no secrets in this file).
 set -euo pipefail
 export PATH=/snap/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+# Test-environment switch: OMNI_AWS_DISABLED=1 (env or /etc/alpha-finance/.env) means
+# there is no S3 to copy to, so this job exits cleanly instead of failing every night.
+OMNI_AWS_DISABLED=${OMNI_AWS_DISABLED:-$(sudo grep -sE '^OMNI_AWS_DISABLED=' /etc/alpha-finance/.env | head -1 | cut -d= -f2-)}
+if [ "${OMNI_AWS_DISABLED:-0}" = 1 ] || [ "${OMNI_AWS_DISABLED:-0}" = true ]; then
+  echo "SKIP: AWS disabled (OMNI_AWS_DISABLED=1) — no S3 backup in this environment"
+  exit 0
+fi
 S3_BUCKET=alphadirect-db-backups-capetown
 S3_PREFIX=alpha-finance
 TS=$(date -u +%Y-%m-%dT%H-%M-%SZ)
